@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -43,5 +44,23 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    /**
+     * Handle the authentication attempt.
+     */
+    public function authenticate()
+    {
+        $credentials = $this->only(['email', 'password']);
+
+        if (!Auth::attempt($credentials)) {
+            // Jika gagal, tampilkan error
+            throw ValidationException::withMessages([
+                'email' => __('auth.failed'),
+            ]);
+        }
+
+        // Jika berhasil, redirect ke dashboard
+        return redirect()->intended(Filament::getUrl());
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('supirs', function (Blueprint $table) {
-            $table->string('no_hp')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active')->after('alamat');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('supirs', function (Blueprint $table) {
-            $table->dropColumn('no_hp');
+            $table->dropColumn('status');
         });
     }
 };

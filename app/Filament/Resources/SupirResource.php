@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SupirResource\Pages;
+use App\Filament\Resources\SupirResource\RelationManagers\JadwalKerjasRelationManager;
 use App\Models\Supir;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -22,18 +23,30 @@ class SupirResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nik')->required(),
-                Forms\Components\TextInput::make('no_sim')->required(),
+                Forms\Components\TextInput::make('nik')
+                    ->required()
+                    ->numeric()
+                    ->mask('9999999999999999'), // Max 16 digits
+                Forms\Components\TextInput::make('no_sim')
+                    ->required()
+                    ->numeric()
+                    ->mask('999999999999'), // Adjust SIM length as needed
                 Forms\Components\TextInput::make('nama')->required(),
-                Forms\Components\TextInput::make('no_hp')->required(),
+                Forms\Components\TextInput::make('no_hp')
+                    ->required()
+                    ->numeric()
+                    ->mask('999999999999'), // Max 12 digits
                 Forms\Components\Textarea::make('alamat')->required(),
                 Forms\Components\Select::make('status')
                     ->options([
-                        'aktif' => 'Aktif',
-                        'nonaktif' => 'Nonaktif',
+                        'active' => 'Active',
+                        'inactive' => 'Inactive',
                     ])
                     ->required()
-                    ->default('aktif'),
+                    ->default('active'),
+                Forms\Components\DatePicker::make('tanggal_lahir')
+                    ->label('Tanggal Lahir')
+                    ->required(),
             ]);
     }
 
@@ -41,10 +54,19 @@ class SupirResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('nik')->label('NIK'),
                 Tables\Columns\TextColumn::make('nama')->label('Nama'),
-                Tables\Columns\TextColumn::make('no_hp')->label('No HP'),
-                // Tambahkan kolom lain sesuai kebutuhan
+                Tables\Columns\TextColumn::make('tanggal_lahir')->label('Tanggal Lahir'),
+                Tables\Columns\TextColumn::make('umur')->label('Umur'),
+                // ...kolom lain...
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            JadwalKerjasRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
