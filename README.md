@@ -59,3 +59,103 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Manajemen Supir & Kendaraan Logistik
+
+Aplikasi berbasis Laravel + Filament untuk mengelola supir, kendaraan, jadwal kerja, dan riwayat perjalanan logistik.
+
+---
+
+## INSTRUCTION
+
+### 1. Clone Repository
+
+Buka terminal, lalu jalankan salah satu perintah berikut:
+
+```bash
+git clone git@github.com:username/manajemen-supir-logistik.git
+# atau
+git clone https://github.com/username/manajemen-supir-logistik.git
+```
+
+### 2. Masuk ke Folder Project
+
+```bash
+cd manajemen-supir-logistik
+```
+
+### 3. Install Dependency
+
+```bash
+composer install
+```
+
+### 4. Copy File Environment (Jika Belum Ada)
+
+```bash
+cp .env.example .env
+# atau buat file .env sesuai kebutuhan
+```
+
+### 5. Generate Storage Link & Key
+
+```bash
+php artisan storage:link
+php artisan key:generate
+```
+
+### 6. Edit File `.env`
+
+Ubah beberapa konfigurasi berikut sesuai kebutuhan:
+
+```
+APP_TIMEZONE='Asia/Jakarta'
+APP_URL=http://localhost
+ASSET_URL=http://localhost
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 7. Set Permission (Opsional, jika di Linux/Mac)
+
+```bash
+chmod -R 775 storage
+chmod -R 775 bootstrap/cache
+```
+
+### 8. Jalankan Migrasi Database
+
+```bash
+php artisan migrate
+```
+
+### 9. (Opsional) Inisialisasi Data Project
+
+```bash
+php artisan db:seed
+```
+
+### 10. Jalankan Server Laravel
+
+```bash
+php artisan serve
+```
+
+### 11. Akses Aplikasi
+
+Buka browser dan akses [http://localhost:8000](http://localhost:8000)
+
+### 12. Login
+
+Buat user admin terlebih dahulu jika belum ada, melalui fitur register atau seeder.
+
+---
+
+**Catatan:**  
+- Pastikan Composer, PHP, dan MySQL sudah terinstall di komputer.
+- Untuk pengaturan database, sesuaikan dengan environment lokal kamu.
+- Jika ingin akses API, gunakan endpoint yang tersedia di aplikasi.
