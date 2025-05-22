@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('supirs', function (Blueprint $table) {
-            // $table->string('status')->default('active'); // KOMENTARI ATAU HAPUS BARIS INI
+            $table->date('tanggal_lahir')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('supirs', function (Blueprint $table) {
-            // $table->dropColumn('status'); // KOMENTARI ATAU HAPUS BARIS INI
+            $table->dropColumn('tanggal_lahir');
         });
     }
 };

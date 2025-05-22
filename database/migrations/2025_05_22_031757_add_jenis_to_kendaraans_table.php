@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('kendaraans', function (Blueprint $table) {
-            $table->string('kondisi')->after('status');
+            $table->string('jenis');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('kendaraans', function (Blueprint $table) {
-            $table->dropColumn('kondisi');
+            $table->dropColumn('jenis');
         });
     }
 };

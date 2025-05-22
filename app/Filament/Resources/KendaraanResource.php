@@ -8,23 +8,54 @@ use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
 
+use Filament\Forms\Form;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
+
 class KendaraanResource extends Resource
 {
     protected static ?string $model = Kendaraan::class;
     protected static ?string $navigationLabel = 'Manajemen Kendaraan';
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    public static function form(Forms\Form $form): Forms\Form
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nomor_polisi')
+                TextInput::make('nomor_polisi')
                     ->label('Nomor Polisi')
                     ->required()
-                    ->numeric()
-                    ->mask('9999999999999999') // atur jumlah digit sesuai kebutuhan
-                    ->rules(['required', 'numeric']),
-                Forms\Components\Select::make('status')
+                    ->maxLength(14)
+                    ->rules(['regex:/^[0-9]{1,14}$/']) // hanya angka, maksimal 14 digit
+                    ->helperText('Maksimal 14 angka'),
+                Select::make('jenis')
+                    ->label('Jenis Kendaraan')
+                    ->options([
+                        'mobil' => 'Mobil',
+                        'motor' => 'Motor',
+                        'truk' => 'Truk',
+                    ])
+                    ->required(),
+                Select::make('merk')
+                    ->label('Merk')
+                    ->options([
+                        'toyota' => 'Toyota',
+                        'honda' => 'Honda',
+                        'isuzu' => 'Isuzu',
+                        'mitsubishi' => 'Mitsubishi',
+                        'suzuki' => 'Suzuki',
+                        'daihatsu' => 'Daihatsu',
+                        'fuso' => 'Fuso',
+                        'hino' => 'Hino',
+                        'lainnya' => 'Lainnya',
+                    ])
+                    ->searchable()
+                    ->required(),
+                Select::make('tahun')
+                    ->label('Tahun')
+                    ->options(collect(range(date('Y'), 2015))->mapWithKeys(fn($y) => [$y => $y])->toArray())
+                    ->required(),
+                Select::make('status')
                     ->label('Status')
                     ->options([
                         'aktif' => 'Aktif',
@@ -34,20 +65,13 @@ class KendaraanResource extends Resource
                     ])
                     ->required()
                     ->default('aktif'),
-                Forms\Components\Select::make('kondisi')
+                Select::make('kondisi')
                     ->label('Kondisi')
                     ->options([
                         'baik' => 'Baik',
                         'perlu_servis' => 'Perlu Servis',
                         'rusak_ringan' => 'Rusak Ringan',
                         'rusak_berat' => 'Rusak Berat',
-                    ])
-                    ->required(),
-                Forms\Components\Select::make('jenis')
-                    ->label('Jenis Kendaraan')
-                    ->options([
-                        'mobil' => 'Mobil',
-                        'motor' => 'Motor',
                     ])
                     ->required(),
             ]);

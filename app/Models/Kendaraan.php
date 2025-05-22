@@ -8,7 +8,14 @@ use Illuminate\Support\Facades\Schema;
 
 class Kendaraan extends Model
 {
-    protected $fillable = ['nomor_polisi', 'status', 'kondisi'];
+    protected $fillable = [
+        'nomor_polisi',
+        'jenis',
+        'merk',
+        'tahun',
+        'status',
+        'kondisi',
+    ];
 
     public function up()
     {

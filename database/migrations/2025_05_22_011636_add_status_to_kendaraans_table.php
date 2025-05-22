@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::table('kendaraans', function (Blueprint $table) {
             $table->enum('status', ['aktif', 'tidak_aktif', 'servis', 'rusak'])->default('aktif')->after('nomor_polisi');
-            $table->string('jenis')->default('mobil');
         });
     }
 
@@ -24,7 +23,6 @@ return new class extends Migration
     {
         Schema::table('kendaraans', function (Blueprint $table) {
             $table->dropColumn('status');
-            $table->dropColumn('jenis');
         });
     }
 };

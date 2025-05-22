@@ -41,17 +41,40 @@ class JadwalKerjaResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('supir.nama')
+                    ->label('Nama Supir')
+                    ->searchable()
+                    ->sortable()
+                    ->icon('heroicon-o-user'),
+                Tables\Columns\TextColumn::make('tanggal')
+                    ->label('Tanggal')
+                    ->date('d F Y')
+                    ->sortable(),
+                Tables\Columns\BadgeColumn::make('shift')
+                    ->label('Shift')
+                    ->colors([
+                        'Pagi' => 'success',
+                        'Siang' => 'info',
+                        'Malam' => 'warning',
+                    ])
+                    ->formatStateUsing(fn ($state) => ucfirst($state)),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('shift')
+                    ->label('Filter Shift')
+                    ->options([
+                        'Pagi' => 'Pagi',
+                        'Siang' => 'Siang',
+                        'Malam' => 'Malam',
+                    ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Ubah'),
+                Tables\Actions\DeleteAction::make()->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()->label('Hapus Terpilih'),
                 ]),
             ]);
     }
